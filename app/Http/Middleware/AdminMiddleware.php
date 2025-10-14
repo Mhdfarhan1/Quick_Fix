@@ -8,12 +8,27 @@ use Illuminate\Support\Facades\Auth;
 
 class AdminMiddleware
 {
+    /**
+     * Handle an incoming request.
+     */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::check() && Auth::user()->role === 'admin') {
-            return $next($request);
+        // Jika belum login, arahkan ke halaman login admin
+        if (!Auth::check()) {
+            return redirect()->route('admin.login')->withErrors([
+                'login' => 'Silakan login terlebih dahulu.'
+            ]);
         }
 
-        return redirect()->route('admin.login');
+        // Jika user bukan admin
+        if (Auth::user()->role !== 'admin') {
+            Auth::logout();
+            return redirect()->route('admin.login')->withErrors([
+                'access' => 'Akses ditolak. Anda bukan admin.'
+            ]);
+        }
+
+        // Jika valid, lanjut ke proses berikutnya
+        return $next($request);
     }
 }

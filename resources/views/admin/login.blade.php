@@ -14,7 +14,7 @@
 
     <!-- Logo -->
     <div class="mb-1 flex flex-col items-center">
-        <img src="assets/Logo Quickfix-05.png" alt="Logo website"
+        <img src="{{ asset('assets/img/Logo_quickfix.png') }}" alt="Logo website"
             class="w-28 h-28 mb-4 rounded-full shadow-md border-2 border-white/30">
     </div>
 
@@ -22,7 +22,7 @@
     <div class="bg-white rounded-3xl shadow-2xl p-12 w-full max-w-lg">
         <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">Login Admin</h2>
 
-        <form action="{{ route('admin.login.post') }}" method="POST" class="space-y-6">
+        <form action="{{ route('admin.login.process') }}" method="POST" class="space-y-6">
             @csrf
 
             <!-- Email -->
